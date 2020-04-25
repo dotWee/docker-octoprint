@@ -1,5 +1,5 @@
 # Intermediate build container.
-FROM python:2.7-alpine3.10 as build
+FROM python:2.7-alpine as build
 
 ARG TARGETPLATFORM
 ARG VERSION
@@ -28,7 +28,7 @@ RUN LIBRARY_PATH=/lib:/usr/lib pip install -r requirements.txt
 RUN LIBRARY_PATH=/lib:/usr/lib python setup.py install
 
 # Build final image
-FROM python:2.7-alpine3.10
+FROM python:2.7-alpine
 
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
