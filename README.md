@@ -12,24 +12,24 @@ This is a Dockerfile to set up [OctoPrint](http://octoprint.org/). It supports t
 Just run:
 
 ```sh
-docker run nunofgs/octoprint
+docker run dotwee/octoprint
 ```
 
 Now have a beer, you did it. 🍻
 
 # Tags
 
-- `1.4.0`, `1.4.0-debian`, `debian`, `latest` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.4.0-alpine`, `alpine` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/alpine/Dockerfile))
-- `1.3.12`, `1.3.12-debian` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.12-alpine` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/alpine/Dockerfile))
-- `1.3.11`, `1.3.11-debian` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.11-alpine` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/alpine/Dockerfile))
-- `1.3.10` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.9` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.8` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.7` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
-- `1.3.6` ([Dockerfile](https://github.com/nunofgs/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.4.0`, `1.4.0-debian`, `debian`, `latest` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.4.0-alpine`, `alpine` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/alpine/Dockerfile))
+- `1.3.12`, `1.3.12-debian` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.12-alpine` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/alpine/Dockerfile))
+- `1.3.11`, `1.3.11-debian` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.11-alpine` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/alpine/Dockerfile))
+- `1.3.10` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.9` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.8` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.7` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
+- `1.3.6` ([Dockerfile](https://github.com/dotwee/docker-octoprint/blob/master/debian/Dockerfile))
 - `master-debian`, `master` (_Automatically built daily from OctoPrint's `master` branch_)
 - `master-alpine` (_Automatically built daily from OctoPrint's `master` branch_)
 
@@ -50,7 +50,7 @@ $ docker run \
   --device=/dev/video0 \
   -p 80:80 \
   -v /mnt/data:/data \
-  nunofgs/octoprint
+  dotwee/octoprint
 ```
 
 # Environment Variables
@@ -109,16 +109,16 @@ While SD cards are pretty cheap these days, a smaller image is always preferrabl
 
 ## ARMv6 Docker Bug
 
-_ARM32v6_ devices such as the Raspberry Pi Zero (W) are unfortunately unable to pull this image directly using `docker pull nunofgs/octoprint` due to a bug in Docker ([moby/moby#37647](https://github.com/moby/moby/issues/37647), [moby/moby#34875](https://github.com/moby/moby/issues/34875)). There's a [PR open](https://github.com/moby/moby/pull/36121#issuecomment-515243647) to fix this but it might be some time until it hits a stable Docker release.
+_ARM32v6_ devices such as the Raspberry Pi Zero (W) are unfortunately unable to pull this image directly using `docker pull dotwee/octoprint` due to a bug in Docker ([moby/moby#37647](https://github.com/moby/moby/issues/37647), [moby/moby#34875](https://github.com/moby/moby/issues/34875)). There's a [PR open](https://github.com/moby/moby/pull/36121#issuecomment-515243647) to fix this but it might be some time until it hits a stable Docker release.
 
 Until then, you can run this container by specifying the armv6 image hash. Example on [HypriotOS 1.11.0](https://blog.hypriot.com):
 
 ```sh
-$ docker manifest inspect nunofgs/octoprint | grep -e "variant.*v6" -B 4
+$ docker manifest inspect dotwee/octoprint | grep -e "variant.*v6" -B 4
 
 # copy sha256 hash of the v6 image you want to run.
 
-$ docker run nunofgs/octoprint@sha256:dce9b67ccd25bb63c3024ab96c55428281d8c3955c95c7b5133807133863da29
+$ docker run dotwee/octoprint@sha256:dce9b67ccd25bb63c3024ab96c55428281d8c3955c95c7b5133807133863da29
 ```
 
 ## Toggle the camera on/off
@@ -140,6 +140,18 @@ system:
     name: Stop webcam
 ```
 
+## Docker Compose
+
+Setup:
+
+```bash
+$ mkdir /opt/docker/octoprint
+$ git clone https://github.com/dotWee/docker-octoprint.git /opt/docker/octoprint/docker-octoprint
+$ cp /opt/docker/octoprint/docker-octoprint/docker-compose.yml /opt/docker/octoprint/docker-compose.yml
+$ cd /opt/docker/octoprint && docker-compose up -d
+```
+
+
 # Credits
 
 Original credits go to https://bitbucket.org/a2z-team/docker-octoprint. I initially ported this to the raspberry pi 2 and later moved to a multiarch image.
@@ -148,5 +160,5 @@ Original credits go to https://bitbucket.org/a2z-team/docker-octoprint. I initia
 
 MIT
 
-[travis-image]: https://img.shields.io/travis/nunofgs/docker-octoprint.svg?style=flat-square
-[travis-url]: https://travis-ci.org/nunofgs/docker-octoprint
+[travis-image]: https://img.shields.io/travis/dotwee/docker-octoprint.svg?style=flat-square
+[travis-url]: https://travis-ci.org/dotwee/docker-octoprint

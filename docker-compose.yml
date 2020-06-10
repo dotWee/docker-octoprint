@@ -1,0 +1,28 @@
+version: '2.2'
+services:
+  octoprint:
+    container_name: octoprint
+    # image: nunofgs/octoprint
+    restart: unless-stopped
+    environment:
+    #  - CAMERA_DEV="/dev/video0"
+      - MJPEG_STREAMER_AUTOSTART=true
+      - MJPEG_STREAMER_INPUT="-y -n -f 30 -r 640x480"
+    ports:
+      - 80:80
+    volumes:
+      - /opt/docker/octoprint/data/:/data/
+      - /sys:/sys
+      - /dev/mem:/dev/mem
+    devices:
+      - /dev/gpiomem:/dev/gpiomem
+      - /dev/video0:/dev/video0
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    cpu_count: 2
+    cpu_percent: 75
+    build:
+      context: /opt/docker/octoprint/docker-octoprint # https://github.com/dotWee/docker-octoprint.git
+      dockerfile: alpine/Dockerfile
+      args:
+        - TARGETPLATFORM=arm32v7
+        - VERSION=1.4.0
